@@ -1,9 +1,12 @@
-import datetime as dt
+import win32net
 
+user = {'name': 'Test'}
+user['passowrd'] = 'test'
+user['password_age'] = 1
+user['priv'] = 1
+user['home_dir'] = r'C:\Users\depre\Documents'
+user['comment'] = 'none'
+user['flags'] = 0
+user['script_path'] = 'none'
 
-def main():
-    print(str(dt.datetime.now()))
-
-
-if __name__ == '__main__':
-    main()
+win32net.NetUserAdd('none', 1, user)
