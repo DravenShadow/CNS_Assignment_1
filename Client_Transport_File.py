@@ -10,10 +10,11 @@
 import socket
 
 s = socket.socket()
-host = '173.67.178.110'
-port = 27014
+host = '192.168.1.7'
+port = 12345
 
 s.connect((host, port))
+print 'Connected.'
 file_to_send = r'F:\Download\test.txt'
 
 f = open(file_to_send, 'rb')
