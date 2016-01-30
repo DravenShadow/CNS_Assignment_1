@@ -1,9 +1,9 @@
-'''
+"""
     Author:  Rowland DePree             Server_Tic_Tac_Toe.py
 
     This is a server file design to allow the user to play tic tac toe with one other player.  The server will always be
     player 2 the this game.  The standard rules for tic tac toe are used.
-'''
+"""
 import socket
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -16,6 +16,11 @@ game_board = [['E', 'E', 'E'],
 
 
 def update_board_X(move):
+    """
+    Update game board for player 1
+    :param move:
+    :return:
+    """
     if move == 1:
         game_board[0][0] = 'X'
     elif move == 2:
@@ -37,6 +42,11 @@ def update_board_X(move):
 
 
 def update_board_O(move):
+    """
+    Update game board for player 2
+    :param move:
+    :return:
+    """
     if move == 1:
         game_board[0][0] = 'O'
     elif move == 2:
@@ -58,6 +68,11 @@ def update_board_O(move):
 
 
 def validate_move():
+    """
+    Asks for the player's move, and then confirms if that is a valid move.  If not, it will keep asking for a valid move
+    until the player enters in one
+    :return move or new_move:
+    """
     move = input('Enter in your move: ')
     if move == 1 and game_board[0][0] == 'E':
         return move
@@ -111,6 +126,14 @@ def validate_move():
 
 
 def check_win():
+    """
+    Checks to see if anyone won the game.
+    :return 'X', 'O', -1, or 'E':
+        'X' = player 1 won
+        'O' = player 2 won
+        -1 = tie game
+        'E' = game is not done yet
+    """
     if game_board[0][0] == game_board[0][1] == game_board[0][2]:
         return game_board[0][0]
     elif game_board[1][0] == game_board[1][1] == game_board[1][2]:
@@ -143,17 +166,30 @@ def check_win():
 
 
 def print_board():
+    """
+    Prints game board in a readable fashion
+    :return:
+    """
     for row in range(3):
         print game_board[row]
 
 
 def game_reset():
+    """
+    Resets game board for next game
+    :return:
+    """
     for row in range(3):
         for col in range(3):
             game_board[row][col] = 'E'
 
 
 def main():
+    """
+    The main method to the entire program.  This is where the server waits for a connection, and the main part of
+    tic tac toe is played
+    :return:
+    """
     s.bind((host, port))
     s.listen(2)
 
@@ -201,5 +237,6 @@ def main():
         game_reset()
 
 
+# Runs the main method
 if __name__ == '__main__':
     main()

@@ -1,9 +1,9 @@
-'''
+"""
     Author:  Rowland DePree             Client_Tic_Tac_Toe.py
 
     This is a client file design to allow you to play tic tac toe with one other person who has the server file.  This
     file will always make this user player 1.  Standard tic tac toe rules apply.
-'''
+"""
 import socket
 
 game_board = [['E', 'E', 'E'],
@@ -12,6 +12,11 @@ game_board = [['E', 'E', 'E'],
 
 
 def update_board_X(move):
+    """
+    Updates game board with player 1's move
+    :param move:
+    :return:
+    """
     if move == 1:
         game_board[0][0] = 'X'
     elif move == 2:
@@ -33,6 +38,11 @@ def update_board_X(move):
 
 
 def update_board_O(move):
+    """
+    Updates game board with player 2's move
+    :param move:
+    :return:
+    """
     if move == 1:
         game_board[0][0] = 'O'
     elif move == 2:
@@ -54,6 +64,11 @@ def update_board_O(move):
 
 
 def validate_move():
+    """
+    Takes in the move the player makes, and the validates the move.  If the move is not valid it will go through a loop
+    until the player enters in a valid move
+    :return move or new_move:
+    """
     move = input('Enter in your move: ')
     if move == 1 and game_board[0][0] == 'E':
         return move
@@ -107,11 +122,20 @@ def validate_move():
 
 
 def print_board():
+    """
+    Prints the game baord in a readable fashion
+    :return:
+    """
     for row in range(3):
         print game_board[row]
 
 
 def main():
+    """
+    Runs the main part of the program.  It is here where it connects to the server file and the player
+    plays tic tac toe
+    :return:
+    """
     s = socket.socket()
     host = '192.168.1.7'
     port = 12345
@@ -154,5 +178,6 @@ def main():
     s.close()
 
 
+# Runs the main method
 if __name__ == '__main__':
     main()
