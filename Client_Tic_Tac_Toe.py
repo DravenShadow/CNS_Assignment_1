@@ -1,21 +1,32 @@
 import socket
 
-tic_tac_toe_board = [[0, 0, 0],
-                     [0, 0, 0],
-                     [0, 0, 0]]
-
-recieve_board_list = []
-
 s = socket.socket()
 host = socket.gethostname()
 port = 12345
 
-s.connect((host, port))
-r = s.recv(1024)
-print('Receving Game Board...')
-while r:
-    recieve_board_list.append(r)
-    r = s.recv(1024)
-print('Game board has been received')
-print(recieve_board_list)
-s.close
+
+def socket_string_transfer(send, info=''):
+    recive_info = ''
+
+    s.connect((host, port))
+    if send:
+        s.send(str(info))
+        recive_info = 'Move Sent...'
+    else:
+        recive_info = s.recv(1024)
+    s.shutdown(socket.SHUT_RDWR)
+    s.close()
+
+    return recive_info
+
+
+def main():
+    print socket_string_transfer(False)
+
+    user_input = input('Enter in the location you want to place an X in: ')
+
+    socket_string_transfer(True, user_input)
+
+
+if __name__ == '__main__':
+    main()

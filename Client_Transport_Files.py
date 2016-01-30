@@ -1,13 +1,13 @@
-import socket  # Import socket module
+import socket
 
-s = socket.socket()  # Create a socket object
-host = socket.gethostname()  # Get local machine name
-port = 12345  # Reserve a port for your service.
-s.bind((host, port))  # Bind to the port
+s = socket.socket()
+host = socket.gethostname()
+port = 12345
+s.bind((host, port))
 f = open('test.jpg', 'wb')
-s.listen(5)  # Now wait for client connection.
+s.listen(5)
 while True:
-    c, addr = s.accept()  # Establish connection with client.
+    c, addr = s.accept()
     print 'Got connection from', addr
     print "Receiving..."
     l = c.recv(1024)
@@ -18,4 +18,4 @@ while True:
     f.close()
     print "Done Receiving"
     c.send('Thank you for connecting')
-    c.close()  # Close the connection
+    c.close()
