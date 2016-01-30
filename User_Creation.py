@@ -19,7 +19,7 @@ def main():
     if platform.system() == 'Linux':
         os.system('sudo useradd ' + username + ' -m -p ' + password)
     else:
-        print 'Your system is not supported by this program.'
+        print 'Error: Your system is not designed to be use with this program!'
 
 
 # Runs the main program
