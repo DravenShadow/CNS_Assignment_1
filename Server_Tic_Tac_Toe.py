@@ -148,22 +148,18 @@ def print_board():
 
 
 def game_reset():
-    game_board = [['E', 'E', 'E'],
-                  ['E', 'E', 'E'],
-                  ['E', 'E', 'E']]
+    for row in range(3):
+        for col in range(3):
+            game_board[row][col] = 'E'
 
 
 def main():
     s.bind((host, port))
     s.listen(2)
-    player_count = 0
-    player_list = []
-    game_over = False
 
     while True:
+        game_over = False
         conn, addr = s.accept()
-        player_count += 1
-        player_list.append(addr)
         print 'Got connection from' + str(addr)
         print '\nWelome to Tic Tac Toe Socket Edition!' \
               '\nStandard tic tac toe rules are use.  This means you must get' \
@@ -177,31 +173,30 @@ def main():
               '\n4 | 5 | 6' \
               '\n_________' \
               '\n7 | 8 | 9\n'
-        if player_count == 1:
-            print_board()
-            while not game_over:
-                print 'Waiting on Player 1....\n'
-                move = conn.recv(1024)
-                update_board_X(int(move))
-                winner = check_win()
+        print_board()
+        while not game_over:
+            print 'Waiting on Player 1....\n'
+            move = conn.recv(1024)
+            update_board_X(int(move))
+            winner = check_win()
 
-                if winner == 'X':
-                    print 'Player 1 Wins!'
-                    conn.send('Player 1 Wins!')
-                    game_over = True
-                elif winner == 'O':
-                    print 'Player 2 Wins!'
-                    conn.send('Player 2 Wins!')
-                    game_over = True
-                elif winner == 'E':
-                    print_board()
-                    move = validate_move()
-                    update_board_O(move)
-                    conn.send(str(move))
-                else:
-                    print 'Tie! No One Wins!'
-                    conn.send('Tie! No One Wins!')
-                    game_over = True
+            if winner == 'X':
+                print 'Player 1 Wins!'
+                conn.send('Player 1 Wins!')
+                game_over = True
+            elif winner == 'O':
+                print 'Player 2 Wins!'
+                conn.send('Player 2 Wins!')
+                game_over = True
+            elif winner == 'E':
+                print_board()
+                move = validate_move()
+                update_board_O(move)
+                conn.send(str(move))
+            else:
+                print 'Tie! No One Wins!'
+                conn.send('Tie! No One Wins!')
+                game_over = True
         conn.close()
         game_reset()
 
