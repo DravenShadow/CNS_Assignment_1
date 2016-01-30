@@ -1,7 +1,7 @@
 import socket
 
 s = socket.socket()
-host = '192.168.1.7'
+host = ''
 port = 12345
 
 game_board = [[0, 0, 0],
@@ -92,3 +92,7 @@ def main():
             print 'PLayer 2 Wins!'
             print game_board
             game_over = True
+
+
+if __name__ == '__main__':
+    main()

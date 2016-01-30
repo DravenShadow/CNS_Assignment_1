@@ -1,8 +1,8 @@
 import socket
 
 s = socket.socket()
-host = '192.168.1.7'
-port = 12345
+host = ''
+port = 54321
 
 game_board = [[0, 0, 0],
               [0, 0, 0],
@@ -79,7 +79,7 @@ def main():
         print(game_board)
         move = raw_input('Enter in move: ')
         update_board_X(move)
-        s.sendto(move)
+        s.sendto(move, (host, port))
         data = s.recv(1024)
         update_board_O(data)
         winner = check_win()
@@ -92,3 +92,7 @@ def main():
             print 'PLayer 2 Wins!'
             print game_board
             game_over = True
+
+
+if __name__ == '__main__':
+    main()
