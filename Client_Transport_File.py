@@ -6,24 +6,25 @@
     server as well.  You will also need to know what kind of file you are receiving.  Then change the file format in the
     name of the file you will be writing to match that file format you are receiving from.
 '''
+
 import socket
 
 s = socket.socket()
-host = socket.gethostname()
-port = 12345
-s.bind((host, port))
-f = open('received_file.txt', 'wb')
-s.listen(5)
-while True:
-    c, addr = s.accept()
-    print 'Got connection from', addr
-    print "Receiving..."
-    l = c.recv(1024)
-    while (l):
-        print "Receiving..."
-        f.write(l)
-        l = c.recv(1024)
-    f.close()
-    print "Done Receiving"
-    c.send('Thank you for connecting')
-    c.close()
+host = '173.67.178.110'
+port = 27014
+
+s.connect((host, port))
+file_to_send = r'F:\Download\test.txt'
+
+f = open(file_to_send, 'rb')
+print 'Sending...'
+l = f.read(1024)
+while (l):
+    print 'Sending...'
+    s.send(l)
+    l = f.read(1024)
+f.close()
+print "Done Sending"
+s.shutdown(socket.SHUT_WR)
+print s.recv(1024)
+s.close

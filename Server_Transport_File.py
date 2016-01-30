@@ -6,25 +6,24 @@
     the host to the IP address, the port to the port number you are using and the file_to_send to the location of the file
     you wish to send while leaving the r in front of the location.
 '''
-
 import socket
 
 s = socket.socket()
-host = socket.gethostname()
-port = 12345
-
-s.connect((host, port))
-file_to_send = r'F:\Download\test.txt'
-
-f = open(file_to_send, 'rb')
-print 'Sending...'
-l = f.read(1024)
-while (l):
-    print 'Sending...'
-    s.send(l)
-    l = f.read(1024)
-f.close()
-print "Done Sending"
-s.shutdown(socket.SHUT_WR)
-print s.recv(1024)
-s.close
+host = '173.67.178.110'
+port = 27014
+s.bind((host, port))
+f = open('received_file.txt', 'wb')
+s.listen(5)
+while True:
+    c, addr = s.accept()
+    print 'Got connection from', addr
+    print "Receiving..."
+    l = c.recv(1024)
+    while (l):
+        print "Receiving..."
+        f.write(l)
+        l = c.recv(1024)
+    f.close()
+    print "Done Receiving"
+    c.send('Thank you for connecting')
+    c.close()
